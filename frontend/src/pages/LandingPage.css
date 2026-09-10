@@ -1,0 +1,30 @@
+@keyframes meshDrift {
+  0% {
+    background-position: 0% 0%, 100% 0%, 50% 100%;
+  }
+  50% {
+    background-position: 20% 10%, 80% 15%, 45% 90%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 0%, 50% 100%;
+  }
+}
+
+.hero-mesh {
+  background-image:
+    radial-gradient(circle at 20% 20%, var(--color-mesh-violet) 0%, transparent 45%),
+    radial-gradient(circle at 80% 10%, var(--color-cyan) 0%, transparent 42%),
+    radial-gradient(circle at 50% 100%, var(--color-mesh-gold) 0%, transparent 45%);
+  background-size:
+    160% 160%,
+    150% 150%,
+    170% 170%;
+  animation: meshDrift 22s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mesh {
+    animation: none;
+  }
+}

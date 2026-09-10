@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FAFAF8;-webkit-font-smoothing:antialiased}
+  *{box-sizing:border-box}
+  .tabular{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+
+<div style="font-family:'Public Sans',sans-serif;color:#23232B;display:flex;min-height:100vh">
+
+  <!-- SIDEBAR -->
+  <div style="width:232px;flex:none;background:#fff;border-right:1px solid #F1F0EC;padding:28px 20px;display:flex;flex-direction:column">
+    <img src="uploads/finpilotnew-removebg-preview.png" alt="FinPilot AI" style="height:22px;width:auto;object-fit:contain;margin:0 8px 40px" />
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Dashboard</div>
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Spending</div>
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Forecast</div>
+      <div style="font-size:14px;font-weight:600;color:#fff;background:#4338CA;border-radius:10px;padding:11px 14px">Advice</div>
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Settings</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;padding:44px 56px 80px;max-width:920px">
+
+    <div style="margin-bottom:36px">
+      <h1 style="font-family:'Sora',sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.015em;margin:0 0 6px;color:#1B1B22">AI Advisor</h1>
+      <div style="font-size:14px;color:#8A8A93">Recommendations grounded in your actual numbers</div>
+    </div>
+
+    <!-- BUDGETING -->
+    <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#8A8A93;margin-bottom:16px">Budgeting</div>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:44px">
+      <sc-for list="{{ budgetingCards }}" as="card" hint-placeholder-count="2">
+        <div style="border-radius:20px;padding:1px;background:linear-gradient(135deg,#4FE0D6,#4338CA);position:relative">
+          <div style="border-radius:19px;background:#fff;padding:26px 28px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-70px;right:-70px;width:200px;height:200px;background:radial-gradient(circle,#4FE0D64D,transparent 70%);pointer-events:none"></div>
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;position:relative;z-index:1">
+              <span style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#4FE0D6,#4338CA);display:inline-block"></span>
+              <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:#4338CA">FinPilot suggests</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;z-index:1">
+              <div>
+                <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:#1B1B22;margin-bottom:8px">{{ card.headline }}</div>
+                <div style="font-size:14.5px;line-height:1.6;color:#5B5B66">{{ card.body }}</div>
+              </div>
+              <div style="text-align:right;flex:none">
+                <div class="tabular" style="font-family:'Sora',sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.01em;color:#1B1B22">{{ card.figure }}</div>
+                <div style="font-size:12px;color:#8A8A93;margin-top:2px">{{ card.figureLabel }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:20px;position:relative;z-index:1">
+              <button onClick="{{ card.onApply }}" disabled="{{ card.applied }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13.5px;background:{{ card.applyBg }};color:{{ card.applyColor }};border:none;border-radius:10px;padding:10px 18px;cursor:pointer">{{ card.applyLabel }}</button>
+              <button onClick="{{ card.onDismiss }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13.5px;background:transparent;color:#8A8A93;border:none;border-radius:10px;padding:10px 18px;cursor:pointer">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- SAVING -->
+    <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#8A8A93;margin-bottom:16px">Saving</div>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:44px">
+      <sc-for list="{{ savingCards }}" as="card" hint-placeholder-count="2">
+        <div style="border-radius:20px;padding:1px;background:linear-gradient(135deg,#4FE0D6,#4338CA);position:relative">
+          <div style="border-radius:19px;background:#fff;padding:26px 28px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-70px;right:-70px;width:200px;height:200px;background:radial-gradient(circle,#4FE0D64D,transparent 70%);pointer-events:none"></div>
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;position:relative;z-index:1">
+              <span style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#4FE0D6,#4338CA);display:inline-block"></span>
+              <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:#4338CA">FinPilot suggests</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;z-index:1">
+              <div>
+                <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:#1B1B22;margin-bottom:8px">{{ card.headline }}</div>
+                <div style="font-size:14.5px;line-height:1.6;color:#5B5B66">{{ card.body }}</div>
+              </div>
+              <div style="text-align:right;flex:none">
+                <div class="tabular" style="font-family:'Sora',sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.01em;color:#1B1B22">{{ card.figure }}</div>
+                <div style="font-size:12px;color:#8A8A93;margin-top:2px">{{ card.figureLabel }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:20px;position:relative;z-index:1">
+              <button onClick="{{ card.onApply }}" disabled="{{ card.applied }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13.5px;background:{{ card.applyBg }};color:{{ card.applyColor }};border:none;border-radius:10px;padding:10px 18px;cursor:pointer">{{ card.applyLabel }}</button>
+              <button onClick="{{ card.onDismiss }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13.5px;background:transparent;color:#8A8A93;border:none;border-radius:10px;padding:10px 18px;cursor:pointer">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- INVESTING -->
+    <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#8A8A93;margin-bottom:16px">Investing</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ investingCards }}" as="card" hint-placeholder-count="2">
+        <div style="border-radius:20px;padding:1px;background:linear-gradient(135deg,#4FE0D6,#4338CA);position:relative">
+          <div style="border-radius:19px;background:#fff;padding:26px 28px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-70px;right:-70px;width:200px;height:200px;background:radial-gradient(circle,#4FE0D64D,transparent 70%);pointer-events:none"></div>
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;position:relative;z-index:1">
+              <span style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#4FE0D6,#4338CA);display:inline-block"></span>
+              <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:#4338CA">FinPilot suggests</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;z-index:1">
+              <div>
+                <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:18px;color:#1B1B22;margin-bottom:8px">{{ card.headline }}</div>
+                <div style="font-size:14.5px;line-height:1.6;color:#5B5B66">{{ card.body }}</div>
+              </div>
+              <div style="text-align:right;flex:none">
+                <div class="tabular" style="font-family:'Sora',sans-serif;font-weight:700;font-size:32px;letter-spacing:-0.01em;color:#1B1B22">{{ card.figure }}</div>
+                <div style="font-size:12px;color:#8A8A93;margin-top:2px">{{ card.figureLabel }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:20px;position:relative;z-index:1">
+              <button onClick="{{ card.onApply }}" disabled="{{ card.applied }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13.5px;background:{{ card.applyBg }};color:{{ card.applyColor }};border:none;border-radius:10px;padding:10px 18px;cursor:pointer">{{ card.applyLabel }}</button>
+              <button onClick="{{ card.onDismiss }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13.5px;background:transparent;color:#8A8A93;border:none;border-radius:10px;padding:10px 18px;cursor:pointer">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ investingCards.length === 0 }}" hint-placeholder-val="{{ false }}">
+        <div></div>
+      </sc-if>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    dismissed: {},
+    applied: {}
+  };
+
+  makeCard(raw) {
+    const isApplied = !!this.state.applied[raw.id];
+    return {
+      ...raw,
+      applied: isApplied,
+      applyLabel: isApplied ? "Applied" : "Apply to budget",
+      applyBg: isApplied ? "#E4F3EF" : "#4338CA",
+      applyColor: isApplied ? "#256B5F" : "#fff",
+      onApply: () => this.setState(s => ({ applied: { ...s.applied, [raw.id]: true } })),
+      onDismiss: () => this.setState(s => ({ dismissed: { ...s.dismissed, [raw.id]: true } }))
+    };
+  }
+
+  renderVals() {
+    const all = {
+      budgeting: [
+        { id: "b1", headline: "Dining out is on track to overshoot your budget", body: "You've spent $412 on dining this month against a $350 budget, and you still have 12 days left in the cycle.", figure: "$412", figureLabel: "spent so far" },
+        { id: "b2", headline: "Your subscriptions budget has slack this month", body: "You're using $140 of your $200 subscriptions budget. Two unused trials expire this week.", figure: "$60", figureLabel: "unused budget" }
+      ],
+      saving: [
+        { id: "s1", headline: "Move idle cash into your high-yield savings", body: "Checking has held a $2,100 surplus above your typical balance for 18 days, earning close to nothing.", figure: "$2,100", figureLabel: "idle surplus" },
+        { id: "s2", headline: "You're 3 months from your emergency fund goal", body: "At your current savings rate of 22%, you'll reach your $10,000 emergency fund target by November.", figure: "3 mo", figureLabel: "to goal" }
+      ],
+      investing: [
+        { id: "i1", headline: "Your portfolio is underweight in bonds", body: "Your allocation is 94% equities against a target of 80/20, leaving you more exposed to volatility than planned.", figure: "94%", figureLabel: "equities" },
+        { id: "i2", headline: "Unused cash could offset this year's contribution room", body: "You have $2,100 in idle cash and $4,300 of unused retirement contribution room remaining for this year.", figure: "$4,300", figureLabel: "room left" }
+      ]
+    };
+
+    const filterMake = (list) => list.filter(c => !this.state.dismissed[c.id]).map(c => this.makeCard(c));
+
+    return {
+      budgetingCards: filterMake(all.budgeting),
+      savingCards: filterMake(all.saving),
+      investingCards: filterMake(all.investing)
+    };
+  }
+}
+
+</script>
+</body>
+</html>

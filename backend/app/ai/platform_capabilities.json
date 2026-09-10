@@ -1,0 +1,33 @@
+{
+  "_comment": "Every screen and user-facing action FinPilot actually has. Injected into Fino's system prompt as the only source of truth for 'how do I...' questions. Update this file in the same PR as any new route or action — it's on the PR checklist.",
+  "screens": [
+    { "route": "/dashboard", "label": "Dashboard", "what_it_does": "Balance, this month's spend, next month's forecast, spending trend chart, category breakdown, market indices, and the AI advisor panel." },
+    { "route": "/import", "label": "Import", "what_it_does": "Upload a bank statement CSV with column mapping and preview, or scan a UPI/bank screenshot for automatic transaction extraction." },
+    { "route": "/forecast", "label": "Forecast", "what_it_does": "Prophet-based spending forecast for the next month with a confidence range, and per-category forecasts." },
+    { "route": "/advice", "label": "Advice", "what_it_does": "Claude-generated budgeting/saving/investing recommendations grounded in the user's real numbers." },
+    { "route": "/what-if", "label": "What-if", "what_it_does": "A slider-based simulator projecting revised spend, savings rate, and months-to-goal under hypothetical category changes." },
+    { "route": "/transactions", "label": "Transactions", "what_it_does": "Full transaction list — search, filter, manual add/edit/delete, category correction." },
+    { "route": "/budgets", "label": "Budgets", "what_it_does": "Set a monthly limit per category; see live progress and overspend flags." },
+    { "route": "/goals", "label": "Goals", "what_it_does": "Create savings goals with a target amount and date; see progress and a projected completion date based on the user's real savings rate." },
+    { "route": "/reports", "label": "Reports", "what_it_does": "Monthly summary view, CSV export of transactions, PDF export of the monthly summary." },
+    { "route": "/profile", "label": "Profile", "what_it_does": "Identity, connected Google account, retake the onboarding quiz, sign out, delete account (permanent, cascades all data)." },
+    { "route": "/onboarding", "label": "Onboarding quiz", "what_it_does": "A one-time (retakeable) 14-question quiz that sets risk tolerance, financial literacy level, life stage, and starting goals — personalizes the dashboard and advice register." }
+  ],
+  "actions_fino_can_suggest": [
+    { "id": "open_import", "label": "Open Import", "route": "/import", "writes_data": false },
+    { "id": "open_goals", "label": "Open Goals", "route": "/goals", "writes_data": false },
+    { "id": "open_budgets", "label": "Open Budgets", "route": "/budgets", "writes_data": false },
+    { "id": "open_what_if", "label": "Open What-if", "route": "/what-if", "writes_data": false },
+    { "id": "open_forecast", "label": "Open Forecast", "route": "/forecast", "writes_data": false },
+    { "id": "open_advice", "label": "Open Advice", "route": "/advice", "writes_data": false },
+    { "id": "open_reports", "label": "Open Reports", "route": "/reports", "writes_data": false },
+    { "id": "open_profile", "label": "Open Profile", "route": "/profile", "writes_data": false },
+    { "id": "retake_quiz", "label": "Retake the onboarding quiz", "route": "/onboarding", "writes_data": false }
+  ],
+  "not_yet_built": [
+    "Market Academy (structured lessons) — Fino can explain concepts directly but cannot yet deep-link to a lesson.",
+    "Scam Awareness Center — not yet built.",
+    "Fund discovery / Fino Buddy — not yet built; do not offer to start a Fino Buddy session.",
+    "Any action that writes data on the user's behalf (creating a goal, a budget, a transaction) — Fino can only navigate the user to the right screen today, never fill in or submit a form for them."
+  ]
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="FinPilot">
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="var(--fp-pine, #1C5A4E)"/>
+  <g stroke="var(--fp-mint, #7FD4B8)" stroke-width="2" stroke-linecap="round" opacity=".45">
+    <line x1="32" y1="9"  x2="32" y2="13"/>
+    <line x1="32" y1="51" x2="32" y2="55"/>
+    <line x1="9"  y1="32" x2="13" y2="32"/>
+    <line x1="51" y1="32" x2="55" y2="32"/>
+  </g>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="var(--fp-mint, #7FD4B8)" stroke-width="1.5" opacity=".35"/>
+  <path d="M46 18 L29.5 27.5 L36.5 34.5 Z" fill="var(--fp-gold, #E8A33D)"/>
+  <path d="M18 46 L27.5 29.5 L34.5 36.5 Z" fill="var(--fp-paper, #F7F5EF)"/>
+  <circle cx="32" cy="32" r="3.2" fill="var(--fp-pine, #1C5A4E)" stroke="var(--fp-paper, #F7F5EF)" stroke-width="1.6"/>
+</svg>

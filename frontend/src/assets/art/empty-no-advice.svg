@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img" aria-label="No advice yet">
+  <!-- speech bubble -->
+  <path d="M64 46 h192 a20 20 0 0 1 20 20 v82 a20 20 0 0 1 -20 20 h-96 l-34 30 v-30 h-62 a20 20 0 0 1 -20 -20 v-82 a20 20 0 0 1 20 -20 z"
+        fill="var(--fp-paper, #F7F5EF)" stroke="var(--fp-pine, #1C5A4E)" stroke-opacity=".3" stroke-width="2.5"/>
+
+  <!-- lines of advice -->
+  <g fill="var(--fp-slate, #93A5A0)" opacity=".45">
+    <rect x="92" y="80"  width="136" height="8" rx="4"/>
+    <rect x="92" y="102" width="104" height="8" rx="4"/>
+    <rect x="92" y="124" width="120" height="8" rx="4"/>
+  </g>
+  <rect x="92" y="80" width="44" height="8" rx="4" fill="var(--fp-gold, #E8A33D)"/>
+
+  <!-- sparkle cluster -->
+  <g fill="var(--fp-gold, #E8A33D)">
+    <path d="M252 34 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5 z"/>
+    <path d="M276 66 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" opacity=".7"/>
+    <path d="M232 60 l2.4 5.6 5.6 2.4 -5.6 2.4 -2.4 5.6 -2.4 -5.6 -5.6 -2.4 5.6 -2.4 z" opacity=".5"/>
+  </g>
+</svg>

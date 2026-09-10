@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img" aria-label="Upload a statement to get started">
+  <rect x="52" y="34" width="216" height="150" rx="16" fill="none"
+        stroke="var(--fp-pine, #1C5A4E)" stroke-opacity=".35" stroke-width="2.5"
+        stroke-dasharray="10 9" stroke-linecap="round"/>
+
+  <!-- statement sheet -->
+  <g transform="translate(104 58)">
+    <rect x="0" y="0" width="112" height="104" rx="10" fill="var(--fp-paper, #F7F5EF)"
+          stroke="var(--fp-pine, #1C5A4E)" stroke-opacity=".3" stroke-width="2"/>
+    <rect x="16" y="18" width="58" height="7" rx="3.5" fill="var(--fp-pine, #1C5A4E)" opacity=".7"/>
+    <g fill="var(--fp-slate, #93A5A0)" opacity=".55">
+      <rect x="16" y="38" width="42" height="6" rx="3"/>
+      <rect x="16" y="54" width="52" height="6" rx="3"/>
+      <rect x="16" y="70" width="34" height="6" rx="3"/>
+    </g>
+    <g fill="var(--fp-gold, #E8A33D)" opacity=".85">
+      <rect x="80" y="38" width="16" height="6" rx="3"/>
+      <rect x="76" y="54" width="20" height="6" rx="3"/>
+      <rect x="84" y="70" width="12" height="6" rx="3"/>
+    </g>
+  </g>
+
+  <!-- upload arrow -->
+  <g transform="translate(160 186)">
+    <circle r="26" fill="var(--fp-pine, #1C5A4E)"/>
+    <path d="M0 10 V-9 M-8 -1 L0 -10 L8 -1" fill="none" stroke="var(--fp-paper, #F7F5EF)"
+          stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

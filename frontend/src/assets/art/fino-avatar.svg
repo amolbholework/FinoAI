@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Fino, the FinPilot assistant">
+  <circle cx="32" cy="32" r="30" fill="var(--fp-mint, #7FD4B8)"/>
+  <path d="M32 12 a20 20 0 0 1 20 20 v6 a20 20 0 0 1 -20 20 a20 20 0 0 1 -20 -20 v-6 a20 20 0 0 1 20 -20 z"
+        fill="var(--fp-pine, #1C5A4E)"/>
+  <!-- visor -->
+  <rect x="17" y="28" width="30" height="15" rx="7.5" fill="var(--fp-paper, #F7F5EF)"/>
+  <circle cx="25.5" cy="35.5" r="3.4" fill="var(--fp-ink, #10302B)"/>
+  <circle cx="38.5" cy="35.5" r="3.4" fill="var(--fp-ink, #10302B)"/>
+  <!-- antenna -->
+  <line x1="32" y1="12" x2="32" y2="6" stroke="var(--fp-pine, #1C5A4E)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="5" r="3.5" fill="var(--fp-gold, #E8A33D)"/>
+</svg>

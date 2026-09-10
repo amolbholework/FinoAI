@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FAFAF8;-webkit-font-smoothing:antialiased}
+  *{box-sizing:border-box}
+  .tabular{font-variant-numeric:tabular-nums}
+  select{appearance:none;-webkit-appearance:none;background-image:none}
+</style>
+</helmet>
+
+<div style="font-family:'Public Sans',sans-serif;color:#23232B;display:flex;min-height:100vh;position:relative">
+
+  <!-- SIDEBAR -->
+  <div style="width:232px;flex:none;background:#fff;border-right:1px solid #F1F0EC;padding:28px 20px;display:flex;flex-direction:column">
+    <img src="uploads/finpilotnew-removebg-preview.png" alt="FinPilot AI" style="height:22px;width:auto;object-fit:contain;margin:0 8px 40px" />
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Dashboard</div>
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Spending</div>
+      <div style="font-size:14px;font-weight:600;color:#fff;background:#4338CA;border-radius:10px;padding:11px 14px">Import</div>
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Advice</div>
+      <div style="font-size:14px;color:#5B5B66;border-radius:10px;padding:11px 14px">Settings</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;padding:44px 56px 80px;max-width:1200px">
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:32px">
+      <div>
+        <h1 style="font-family:'Sora',sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.015em;margin:0 0 6px;color:#1B1B22">Import transactions</h1>
+        <div style="font-size:14px;color:#8A8A93">Upload a CSV or bank statement to get started</div>
+      </div>
+      <a onClick="{{ openSlideOver }}" href="#" style="font-size:14px;font-weight:600;color:#4338CA;text-decoration:underline;cursor:pointer">Log an expense manually</a>
+    </div>
+
+    <!-- DROP ZONE -->
+    <sc-if value="{{ !parsed }}" hint-placeholder-val="{{ true }}">
+      <div style="border:1.5px dashed #4FE0D6;border-radius:20px;background:#fff;padding:72px 32px;text-align:center;margin-bottom:20px">
+        <div style="width:56px;height:56px;border-radius:16px;background:#E4FBF9;display:flex;align-items:center;justify-content:center;margin:0 auto 22px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 4 V16 M7 9 L12 4 L17 9 M5 20 H19" stroke="#0A9B8E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#1B1B22;margin-bottom:8px">Drop your statement here</div>
+        <div style="font-size:14px;color:#8A8A93;margin-bottom:24px">CSV, PDF, or OFX from any bank — we'll handle the rest</div>
+        <button onClick="{{ simulateUpload }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:14.5px;background:#4338CA;color:#fff;border:none;border-radius:11px;padding:12px 22px;cursor:pointer">Browse files</button>
+      </div>
+    </sc-if>
+
+    <!-- PARSED PREVIEW TABLE -->
+    <sc-if value="{{ parsed }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:20px;padding:32px;box-shadow:0 20px 48px -24px rgba(30,30,40,0.10);margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px">
+          <div>
+            <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:17px;color:#1B1B22">bank_statement_july.csv</div>
+            <div style="font-size:12.5px;color:#8A8A93;margin-top:2px">{{ transactions.length }} transactions detected · review categories below</div>
+          </div>
+          <button onClick="{{ resetUpload }}" style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:13px;background:#F1F0EC;color:#5B5B66;border:none;border-radius:10px;padding:9px 16px;cursor:pointer">Start over</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:90px 1fr 170px 110px 140px;padding:0 4px 12px;border-bottom:1px solid #F1F0EC;font-size:12px;color:#8A8A93">
+          <div>Date</div><div>Merchant</div><div>Category</div><div style="text-align:right">Amount</div><div style="text-align:right">Confidence</div>
+        </div>
+
+        <sc-for list="{{ transactions }}" as="tx" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:90px 1fr 170px 110px 140px;padding:13px 4px;border-bottom:1px solid #F7F6F2;align-items:center">
+            <div style="font-size:13.5px;color:#8A8A93">{{ tx.date }}</div>
+            <div style="font-size:14px;color:#23232B;font-weight:500">{{ tx.merchant }}</div>
+            <div>
+              <select key="{{ tx.category }}" defaultValue="{{ tx.category }}" onChange="{{ tx.onCategoryChange }}" style="font-size:12.5px;font-weight:600;border-radius:100px;padding:6px 12px;background:{{ tx.pillBg }};color:{{ tx.pillColor }};border:none;cursor:pointer;font-family:'Public Sans',sans-serif">
+                <sc-for list="{{ categoryOptions }}" as="opt" hint-placeholder-count="6">
+                  <option value="{{ opt }}">{{ opt }}</option>
+                </sc-for>
+              </select>
+            </div>
+            <div class="tabular" style="text-align:right;font-size:14px;font-weight:600;color:#23232B">{{ tx.amount }}</div>
+            <div style="text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:8px">
+              <div style="width:44px;height:5px;border-radius:100px;background:#F1F0EC;overflow:hidden"><div style="height:100%;width:{{ tx.confidencePct }};background:{{ tx.confidenceColor }};border-radius:100px"></div></div>
+              <span class="tabular" style="font-size:12px;color:#8A8A93">{{ tx.confidenceLabel }}</span>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px">
+          <button style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:14px;background:transparent;color:#5B5B66;border:none;border-radius:10px;padding:11px 18px;cursor:pointer">Cancel</button>
+          <button style="font-family:'Public Sans',sans-serif;font-weight:600;font-size:14px;background:#4338CA;color:#fff;border:none;border-radius:10px;padding:11px 20px;cursor:pointer">Confirm import</button>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- SLIDE-OVER BACKDROP -->
+  <sc-if value="{{ slideOverOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeSlideOver }}" style="position:fixed;inset:0;background:rgba(20,20,26,0.28);z-index:10"></div>
+    <div style="position:fixed;top:0;right:0;height:100%;width:420px;background:#fff;box-shadow:-24px 0 60px -20px rgba(30,30,40,0.25);z-index:11;padding:32px;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px">
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#1B1B22">Log an expense</div>
+        <button onClick="{{ closeSlideOver }}" style="background:none;border:none;cursor:pointer;color:#8A8A93;font-size:18px">✕</button>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px;flex:1">
+        <div>
+          <label style="font-size:12px;color:#8A8A93;display:block;margin-bottom:8px">Amount</label>
+          <div style="border:1.5px solid #E8E6DF;border-radius:12px;padding:13px 16px;font-size:15px;color:#23232B;background:#FAFAF8">$0.00</div>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#8A8A93;display:block;margin-bottom:8px">Merchant</label>
+          <div style="border:1.5px solid #E8E6DF;border-radius:12px;padding:13px 16px;font-size:15px;color:#23232B;background:#FAFAF8">e.g. Trader Joe's</div>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#8A8A93;display:block;margin-bottom:8px">Category</label>
+          <select style="width:100%;border:1.5px solid #E8E6DF;border-radius:12px;padding:13px 16px;font-size:15px;color:#23232B;background:#FAFAF8;font-family:'Public Sans',sans-serif">
+            <sc-for list="{{ categoryOptions }}" as="opt" hint-placeholder-count="6">
+              <option value="{{ opt }}">{{ opt }}</option>
+            </sc-for>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#8A8A93;display:block;margin-bottom:8px">Date</label>
+          <div style="border:1.5px solid #E8E6DF;border-radius:12px;padding:13px 16px;font-size:15px;color:#23232B;background:#FAFAF8">Aug 9, 2026</div>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#8A8A93;display:block;margin-bottom:8px">Note (optional)</label>
+          <div style="border:1.5px solid #E8E6DF;border-radius:12px;padding:13px 16px;font-size:15px;color:#B0AFA6;background:#FAFAF8">Add a note</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:24px">
+        <button onClick="{{ closeSlideOver }}" style="flex:1;font-family:'Public Sans',sans-serif;font-weight:600;font-size:14px;background:#F1F0EC;color:#5B5B66;border:none;border-radius:11px;padding:13px;cursor:pointer">Cancel</button>
+        <button onClick="{{ closeSlideOver }}" style="flex:1;font-family:'Public Sans',sans-serif;font-weight:600;font-size:14px;background:#4338CA;color:#fff;border:none;border-radius:11px;padding:13px;cursor:pointer">Save expense</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    parsed: false,
+    slideOverOpen: false,
+    txCategories: {
+      1: "Groceries", 2: "Travel", 3: "Dining out", 4: "Uncategorized", 5: "Utilities", 6: "Subscriptions"
+    }
+  };
+
+  pillColors(cat) {
+    const map = {
+      "Groceries": ["#EDEBFB", "#4338CA"],
+      "Travel": ["#F1F0EC", "#5B5B66"],
+      "Dining out": ["#FBEAE4", "#B84E33"],
+      "Income": ["#E4F3EF", "#256B5F"],
+      "Utilities": ["#F1F0EC", "#5B5B66"],
+      "Subscriptions": ["#E4FBF9", "#0A4A46"],
+      "Uncategorized": ["#F1F0EC", "#8A8A93"]
+    };
+    return map[cat] || map["Uncategorized"];
+  }
+
+  renderVals() {
+    const raw = [
+      { id: 1, date: "Aug 8", merchant: "Whole Foods Market", amount: "-$86.40", confidencePct: "94%", confidenceLabel: "94%", confidenceColor: "#3F9E8F" },
+      { id: 2, date: "Aug 8", merchant: "Delta Air Lines", amount: "-$612.00", confidencePct: "88%", confidenceLabel: "88%", confidenceColor: "#3F9E8F" },
+      { id: 3, date: "Aug 7", merchant: "Blue Bottle Coffee", amount: "-$6.75", confidencePct: "97%", confidenceLabel: "97%", confidenceColor: "#3F9E8F" },
+      { id: 4, date: "Aug 5", merchant: "Unknown Merchant #4471", amount: "-$214.99", confidencePct: "42%", confidenceLabel: "42%", confidenceColor: "#E8785C" },
+      { id: 5, date: "Aug 4", merchant: "Con Edison", amount: "-$132.10", confidencePct: "91%", confidenceLabel: "91%", confidenceColor: "#3F9E8F" },
+      { id: 6, date: "Aug 3", merchant: "Netflix", amount: "-$15.49", confidencePct: "68%", confidenceLabel: "68%", confidenceColor: "#C99A3A" }
+    ];
+
+    const transactions = raw.map(tx => {
+      const cat = this.state.txCategories[tx.id];
+      const [pillBg, pillColor] = this.pillColors(cat);
+      return {
+        ...tx, category: cat, pillBg, pillColor,
+        onCategoryChange: (e) => this.setState(s => ({ txCategories: { ...s.txCategories, [tx.id]: e.target.value } }))
+      };
+    });
+
+    return {
+      parsed: this.state.parsed,
+      slideOverOpen: this.state.slideOverOpen,
+      transactions,
+      categoryOptions: ["Groceries", "Dining out", "Travel", "Utilities", "Subscriptions", "Income", "Uncategorized"],
+      simulateUpload: () => this.setState({ parsed: true }),
+      resetUpload: () => this.setState({ parsed: false }),
+      openSlideOver: (e) => { e.preventDefault(); this.setState({ slideOverOpen: true }); },
+      closeSlideOver: () => this.setState({ slideOverOpen: false })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

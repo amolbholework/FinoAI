@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------
+ * Design tokens — the single source of truth for color, type, spacing,
+ * radii, and shadow across the app. Nothing outside this block should
+ * contain a raw hex or a pixel value that isn't one of these scales;
+ * every component consumes these via generated Tailwind utilities
+ * (bg-canvas, text-heading, rounded-lg, shadow-card, font-heading, ...)
+ * rather than inline styles. Source: FinPilot AI Design System reference.
+ * ------------------------------------------------------------------- */
+@theme {
+  --color-canvas: #FAFAF8;
+  --color-card: #FFFFFF;
+
+  --color-heading: #1B1B22;
+  --color-body: #23232B;
+  --color-secondary: #5B5B66;
+  --color-muted: #8A8A93;
+
+  --color-hairline: #F1F0EC;
+  --color-border: #E8E6DF;
+
+  --color-primary: #4338CA;
+  --color-primary-soft: #EDEBFB;
+  --color-primary-border: #E2E0F5;
+
+  --color-cyan: #4FE0D6;
+  --color-cyan-soft: #E4FBF9;
+  --color-cyan-ink: #0A4A46;
+
+  --color-positive: #3F9E8F;
+  --color-positive-soft: #E4F3EF;
+  --color-positive-ink: #256B5F;
+
+  /* The one accent reserved for "money moving out" system-wide — budget
+     overspend, negative deltas, outflow indicators on the dashboard's
+     burn-rate strip. One meaning, used nowhere else. */
+  --color-overspend: #E8785C;
+  --color-overspend-soft: #FBEAE4;
+  --color-overspend-ink: #B84E33;
+
+  --color-warning: #C99A3A;
+  --color-warning-soft: #FBF1DF;
+  --color-warning-ink: #7A5A22;
+
+  /* The one accent reserved for AI-generated content — the advisor
+     headline, recommendation cards, any Fino-sourced text. Shares
+     warning's gold value rather than inventing a new hex, but gets its
+     own semantic name so a component marking AI content never has to
+     borrow "warning" (an unrelated meaning) to do it. Used nowhere else. */
+  --color-ai: #C99A3A;
+  --color-ai-soft: #FBF1DF;
+  --color-ai-ink: #7A5A22;
+
+  /* Decorative-only accents for the landing hero's mesh gradient — not part
+     of the semantic palette above, kept as named tokens rather than inline
+     hex so they still live in the one place colors are defined. */
+  --color-mesh-violet: #6C6BF4;
+  --color-mesh-gold: #E8C97A;
+
+  /* Categorical palette for charts that plot several unrelated categories
+     side by side (spend-by-category bars, pie slices) — order carries no
+     meaning beyond "the Nth series", unlike the semantic colors above.
+     Never reuse overspend/warning/ai here — those are reserved meanings. */
+  --color-chart-1: #4338CA;
+  --color-chart-2: #0A4A46;
+  --color-chart-3: #3F9E8F;
+  --color-chart-4: #6C6BF4;
+  --color-chart-5: #B8843A;
+  --color-chart-6: #5B5B66;
+  --color-chart-7: #8B5CF6;
+  --color-chart-8: #2F6690;
+
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Public Sans', sans-serif;
+
+  /* Type scale: 56 / 40 / 32 / 24 / 20 / 18 / 16 / 13 */
+  --text-display: 56px;
+  --text-display--line-height: 1;
+  --text-h1: 40px;
+  --text-h1--line-height: 1.05;
+  --text-h2: 32px;
+  --text-h2--line-height: 1.1;
+  --text-h3: 24px;
+  --text-h3--line-height: 1.2;
+  --text-h4: 20px;
+  --text-h4--line-height: 1.3;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.6;
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+  --text-caption: 13px;
+  --text-caption--line-height: 1.4;
+
+  /* Radii: sm 10 · md 16 · lg 20 · xl 24 · pill (Tailwind's built-in `rounded-full`) */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  --shadow-card: 0 20px 48px -24px rgba(30, 30, 40, 0.10);
+  --shadow-card-sm: 0 16px 40px -26px rgba(30, 30, 40, 0.10);
+  --shadow-card-hover: 0 28px 60px -22px rgba(30, 30, 40, 0.16);
+}
+
+/* Height the persistent DisclaimerBar reserves at the bottom of the
+   viewport — kept as one variable so the bar and the page's bottom
+   padding can never drift out of sync. */
+:root {
+  --disclaimer-bar-h: 40px;
+}
+
+/* Spacing uses Tailwind's default 4px-base numeric scale directly —
+ * p-1=4px, p-2=8px, p-3=12px, p-4=16px, p-6=24px, p-8=32px, p-12=48px,
+ * p-16=64px, p-24=96px — which already covers the 4/8/12/16/24/32/48/64/96
+ * scale from the design system with no extra tokens needed. */
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  margin: 0;
+  padding-bottom: var(--disclaimer-bar-h);
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #4338CA33;
+}
+
+/* Tailwind's preflight strips the native focus outline; replace it with a
+ * consistent, visible one on every interactive control rather than relying
+ * on each component to opt back in individually. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card-sm);
+}
+
+.card-lifted {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Every rupee figure in the app uses this — tabular numerals so a column
+   of amounts actually lines up, tightened tracking because tabular digits
+   run slightly wide. This is what makes a screen read as a ledger rather
+   than a template; apply it to every StatTile, table cell, and chart
+   label that shows money, no exceptions. */
+.money {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.skeleton {
+  background: var(--color-hairline);
+  border-radius: 8px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}

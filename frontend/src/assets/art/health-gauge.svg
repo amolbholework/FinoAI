@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 210" width="320" height="210" role="img" aria-label="Financial health gauge">
+  <!-- Band arcs: Needs attention / Getting there / Stable / Strong -->
+  <g fill="none" stroke-width="22" stroke-linecap="butt">
+    <path d="M50 170 A110 110 0 0 1 82.2 92.2"  stroke="var(--fp-slate, #93A5A0)" stroke-opacity=".55"/>
+    <path d="M82.2 92.2 A110 110 0 0 1 160 60"  stroke="var(--fp-gold, #E8A33D)" stroke-opacity=".55"/>
+    <path d="M160 60 A110 110 0 0 1 237.8 92.2" stroke="var(--fp-mint, #7FD4B8)"/>
+    <path d="M237.8 92.2 A110 110 0 0 1 270 170" stroke="var(--fp-pine, #1C5A4E)"/>
+  </g>
+
+  <!--
+    NEEDLE: rotate by (score * 1.8) degrees around 160,170.
+    score 0 -> rotate(0)   score 50 -> rotate(90)   score 100 -> rotate(180)
+    Shown here at score 68.
+  -->
+  <g transform="rotate(122.4 160 170)">
+    <polygon points="68,170 160,163.5 160,176.5" fill="var(--fp-ink, #10302B)"/>
+  </g>
+  <circle cx="160" cy="170" r="10" fill="var(--fp-paper, #F7F5EF)" stroke="var(--fp-ink, #10302B)" stroke-width="3"/>
+
+  <!-- end labels as ticks -->
+  <g stroke="var(--fp-ink, #10302B)" stroke-opacity=".3" stroke-width="2" stroke-linecap="round">
+    <line x1="34" y1="170" x2="24" y2="170"/>
+    <line x1="286" y1="170" x2="296" y2="170"/>
+  </g>
+</svg>
